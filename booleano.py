@@ -7,8 +7,6 @@ que permiten pedir una entrada cuya respuesta es VERDADERO/SI o FALSO/NO
 
 #----------------------------#2# DECLARAR VARIABLES
 SI = ("s", "si", "y", "yes", "1")
-VERDADERO = ("v", "verdadero", "t", "true", "1")
-
 
 #----------------------------#3# DEFINIR FUNCIONES
 
