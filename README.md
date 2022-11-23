@@ -1,4 +1,4 @@
-link repositorio: 
+link repositorio: https://github.com/lidia-veli/Black-Jack
 
 # JUEGO BLACK-JACK (modificado)
 
