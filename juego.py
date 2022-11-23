@@ -1,17 +1,19 @@
 #1# --------------------IMPORTACIONES------------------------------------
 
-from repartir_cartas import (
-    repartir_dos_cartas_al_jugador,
-    repartir_dos_cartas_al_croupier,
-    repartir_una_carta_mas
+from mod_funciones.booleano import (
+    pedir_entrada_si_o_no
 )
 
-from puntuacion import (
+from mod_funciones.puntuacion import (
     puntuacion_cartas,
     comprobar_ganador
 )
 
-from booleano import pedir_entrada_si_o_no
+from mod_funciones.repartir_cartas import (
+    repartir_dos_cartas_al_jugador,
+    repartir_dos_cartas_al_croupier,
+    repartir_una_carta_mas
+)
 
 #2# --------------------DECLARACION VARIABLES-------------------------------------------------
 cartas = { 
@@ -64,9 +66,8 @@ def accion_croupier(J, C):
     if puntuacion_cartas(C) >= 17:
         print('El croupier se planta.')
     else:
-        print('El croupier saca otra carta')
         C.append( repartir_una_carta_mas(J,C) )
-        print('Las cartas del croupier ahora son: ', mostrar_cartas(C), '. Su puntuación es: ', puntuacion_cartas(C))
+        print('El croupier saca otra carta. Las cartas del croupier ahora son:', mostrar_cartas(C), '. Su puntuación es:', puntuacion_cartas(C))
 
 
 
@@ -96,10 +97,12 @@ def jugar():
             return #se sale de la función jugar()
             
     #cuando no quiera otra carta, y su puntuacion sea <=21, continuamos
-    print('Te plantas.')
+    print('Te plantas con', puntuacion_cartas(J), 'puntos.')
     
     #TURNO CROUPIER -----------------------------------------------------------------------------------
-    accion_croupier(J, C)
+    #el croupier debe sacar cartas siempre que su puntuacion sea <=16
+    while puntuacion_cartas(C) < 17:
+        accion_croupier(J, C)
 
     #COMPROBAR GANADOR
     comprobar_ganador(J, C)
@@ -108,7 +111,7 @@ def jugar():
 def jugar_blackjack():
     global J
     global C
-    
+    print('Bienvenido al juego del Blackjack, el objetivo es conseguir una puntuación de 21 o lo más cercana posible.')
     jugar()
     while pedir_entrada_si_o_no('¿Quieres jugar otra partida? (s/n): ') == True:
         J=[]
