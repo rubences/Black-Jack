@@ -29,3 +29,20 @@ def valor_carta(carta):
 
 def puntuacion_cartas(lista):
     return sum( [valor_carta(lista_cartas[c]) for c in lista] )
+
+
+def comprobar_ganador(J,C):
+    if puntuacion_cartas(J) > puntuacion_cartas(C):
+        if puntuacion_cartas(J) <= 21:
+            print("HAS GANADO")
+        else:
+            print("HAS PERDIDO")
+        
+    elif puntuacion_cartas(J) < puntuacion_cartas(C):
+        if puntuacion_cartas(C) <= 21:
+            print("HAS PERDIDO")
+        else: #si el croupier se pasa de 21, el jugador gana
+            print("HAS GANADO")
+    
+    elif puntuacion_cartas(J) == puntuacion_cartas(C):
+        print('EMPATE')

@@ -1,5 +1,5 @@
 #1# --------------------IMPORTACIONES------------------------------------
-import sys
+
 from repartir_cartas import (
     repartir_dos_cartas_al_jugador,
     repartir_dos_cartas_al_croupier,
@@ -7,7 +7,8 @@ from repartir_cartas import (
 )
 
 from puntuacion import (
-    puntuacion_cartas
+    puntuacion_cartas,
+    comprobar_ganador
 )
 
 from booleano import pedir_entrada_si_o_no
@@ -61,11 +62,11 @@ def accion_croupier(J, C):
     '''
     #si el croupier tiene 16 o menos, se le reparte una carta
     if puntuacion_cartas(C) >= 17:
-        print('El croupier se planta con: ', mostrar_cartas(C), '. Su puntuación es: ', puntuacion_cartas(C))
+        print('El croupier se planta.')
     else:
         print('El croupier saca otra carta')
         C.append( repartir_una_carta_mas(J,C) )
-        print('Las cartas del croupier son: ', mostrar_cartas(C), '. Su puntuación es: ', puntuacion_cartas(C))
+        print('Las cartas del croupier ahora son: ', mostrar_cartas(C), '. Su puntuación es: ', puntuacion_cartas(C))
 
 
 
@@ -89,25 +90,32 @@ def jugar():
         
         if puntuacion_cartas(J)<=21: #si su puntuacion no pasa de 21
             continue #volvemos a preguntar al jugador
-        
+
         else: #si pt >21
-            print('Te has pasado de 21. Has perdido')
+            print('Te has pasado de 21. HAS PERDIDO')
             return #se sale de la función jugar()
             
     #cuando no quiera otra carta, y su puntuacion sea <=21, continuamos
-    print('Te plantas con: ', mostrar_cartas(J), '. Tu puntuación es: ', puntuacion_cartas(J))
-
+    print('Te plantas.')
     
     #TURNO CROUPIER -----------------------------------------------------------------------------------
     accion_croupier(J, C)
 
     #COMPROBAR GANADOR
-    if puntuacion_cartas(J) > puntuacion_cartas(C) and puntuacion_cartas(J) <= 21:
-        print('Has ganado')
-    else:
-        print('Has perdido')
-       
+    comprobar_ganador(J, C)
 
+
+def jugar_blackjack():
+    global J
+    global C
+    
+    jugar()
+    while pedir_entrada_si_o_no('¿Quieres jugar otra partida? (s/n): ') == True:
+        J=[]
+        C=[]
+        jugar()
+    #si no quiere jugar otra partida, se sale del programa
+    print('¡Hasta la próxima!')
 
 
 

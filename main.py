@@ -1,4 +1,4 @@
-from juego import jugar
+from juego import jugar_blackjack
 
 if __name__ == "__main__":
-    jugar()
+    jugar_blackjack()
