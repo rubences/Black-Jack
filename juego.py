@@ -1,5 +1,5 @@
 #1# --------------------IMPORTACIONES------------------------------------
-
+import sys
 from repartir_cartas import (
     repartir_dos_cartas_al_jugador,
     repartir_dos_cartas_al_croupier,
@@ -7,7 +7,7 @@ from repartir_cartas import (
 )
 
 from puntuacion import (
-    puntuacion_cartas,
+    puntuacion_cartas
 )
 
 from booleano import pedir_entrada_si_o_no
@@ -48,26 +48,6 @@ def mostrar_cartas(lista):
 
 
 
-def decision_jugador(J, C):
-    '''
-    Esta funcion pregunta al jugador si quiere  otra carta o plantarse y ejecuta la decision
-    -INPUT -------------
-    J : list
-        lista de cartas del jugador
-    C : list
-        lista de cartas del croupier
-    -OUTPUT ------------
-    cartas del jugador actualizadas
-    '''
-    #se pregunta al jugador si quiere otra carta
-    if pedir_entrada_si_o_no('¿Quieres otra carta? (s/n): '):
-        #si quiere otra carta, se le reparte una carta al azar
-        J.append( repartir_una_carta_mas(J,C) )
-        print('Tus cartas ahora son: ', mostrar_cartas(J))
-    else: #si no quiere otra carta
-        print('Te plantas con: ', mostrar_cartas(J))
-
-
 def accion_croupier(J, C):
     '''
     Esta funcion modeliza las acciones del croupier según las reglas del juego
@@ -81,30 +61,55 @@ def accion_croupier(J, C):
     '''
     #si el croupier tiene 16 o menos, se le reparte una carta
     if puntuacion_cartas(C) >= 17:
-        print('El croupier se planta con: ', mostrar_cartas(C))
+        print('El croupier se planta con: ', mostrar_cartas(C), '. Su puntuación es: ', puntuacion_cartas(C))
     else:
         print('El croupier saca otra carta')
         C.append( repartir_una_carta_mas(J,C) )
-        print('Las cartas del croupier son: ', mostrar_cartas(C))
+        print('Las cartas del croupier son: ', mostrar_cartas(C), '. Su puntuación es: ', puntuacion_cartas(C))
 
 
 
-def ronda_inicial():
+def jugar():
     #se reparten dos cartas visibles al jugador
     global J
     J.extend( repartir_dos_cartas_al_jugador() ) #añadimos las dos cartas repartidas al azar a la lista de cartas del jugador
-    print('Tus cartas son: ', mostrar_cartas(J))
+    print('Tus cartas son: ', mostrar_cartas(J), '. Tu puntuación es: ', puntuacion_cartas(J))
     
     #se reparten dos cartas al croupier
     global C
     C.extend( repartir_dos_cartas_al_croupier(J) ) #añadimos las dos cartas repartidas al azar a la lista de cartas del croupier
-    print('Las cartas del croupier son: ', mostrar_cartas(C))
+    print('Las cartas del croupier son: ', mostrar_cartas(C), '. Su puntuación es: ', puntuacion_cartas(C))
 
-    #se pregunta al jugador si quiere otra carta
-    decision_jugador(J,C)
+    #TURNO JUGADOR -----------------------------------------------------------------------------------
+    #se pregunta al jugador si quiere otra carta, siempre que su puntuacion no pase de 21
+    
+    while pedir_entrada_si_o_no('¿Quieres otra carta? (s/n): ') == True: #mientras el jugador quiera otra carta
+        J.append( repartir_una_carta_mas(J,C) ) #se le reparte una carta al azar
+        print('Tus cartas ahora son: ', mostrar_cartas(J), '. Tu puntuación es: ', puntuacion_cartas(J))
+        
+        if puntuacion_cartas(J)<=21: #si su puntuacion no pasa de 21
+            continue #volvemos a preguntar al jugador
+        
+        else: #si pt >21
+            print('Te has pasado de 21. Has perdido')
+            return #se sale de la función jugar()
+            
+    #cuando no quiera otra carta, y su puntuacion sea <=21, continuamos
+    print('Te plantas con: ', mostrar_cartas(J), '. Tu puntuación es: ', puntuacion_cartas(J))
 
-    #el crupier realiza su accion
-    accion_croupier(J,C)
+    
+    #TURNO CROUPIER -----------------------------------------------------------------------------------
+    accion_croupier(J, C)
+
+    #COMPROBAR GANADOR
+    if puntuacion_cartas(J) > puntuacion_cartas(C) and puntuacion_cartas(J) <= 21:
+        print('Has ganado')
+    else:
+        print('Has perdido')
+       
+
+
+
 
 
 
