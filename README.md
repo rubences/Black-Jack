@@ -3,7 +3,7 @@ link repositorio: https://github.com/lidia-veli/Black-Jack
 # JUEGO BLACK-JACK (modificado)
 
 ## Objetivo del juego
-Este juego consiste en intentar conseguir 21 puntos o lo más cerca posible, sin pasarse. Cada jugador se enfrenta únicamente a la banca (croupier), quien se acerque más a 21 sin pasarse, es el ganador.&&&
+Este juego consiste en intentar conseguir 21 puntos o lo más cerca posible, sin pasarse. Cada jugador se enfrenta únicamente a la banca (croupier), quien se acerque más a 21 sin pasarse, es el ganador.
 
 ## Desarrollo del juego
 El croupier reparte dos cartas 'boca arriba' (visibles para todos) al jugador y sí mismo.
