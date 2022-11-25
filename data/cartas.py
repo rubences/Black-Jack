@@ -1,5 +1,5 @@
-def cartas()
-    return = { 
+def cartas():
+    cartas = { 
         chr(0x1f0a1): 11, 
         chr(0x1f0a2): 2, 
         chr(0x1f0a3): 3, 
@@ -14,3 +14,4 @@ def cartas()
         chr(0x1f0ad): 10, 
         chr(0x1f0ae): 10, 
     } 
+    return cartas
